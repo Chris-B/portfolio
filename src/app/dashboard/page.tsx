@@ -12,8 +12,6 @@ import { CanvasProvider } from '~/context/canvas-context'
 
 export default async function Home() {
 
-    void api.spotify.getListening.prefetch();
-
   return (
       <HydrateClient>
           <CanvasProvider>
