@@ -14,48 +14,26 @@ interface Experience {
 const experiences: Experience[] = [
   {
     id: 1,
-    title: "Senior Full Stack Developer",
-    company: "Tech Innovations Inc.",
-    period: "2019 - Present",
+    title: "Data Solutions & Event Planning",
+    company: "Ethos Veterinary Health - Community Team",
+    period: "2021 - Present",
     description: [
-      "Lead a team of 5 developers in creating scalable web applications",
-      "Implemented microservices architecture, improving system reliability by 30%",
-      "Mentored junior developers and conducted code reviews"
+      "Design and create project management solutions within Smartsheet",
+      "Workspaces for data management including advanced spreadsheets, reports, and dashboards",
+      "Data Entry, Advanced Formulas, Cross-Sheet References, Pivot Tables, Calendar App",
+      "Program and retreat registrations using Cvent/Smartsheet",
+      "Rooming lists, hotel communications, attendee assistance",
     ]
   },
   {
     id: 2,
-    title: "Full Stack Developer",
-    company: "Digital Solutions LLC",
-    period: "2016 - 2019",
+    title: "Freelance Developer",
+    company: "Data Dynamics LLC",
+    period: "2015 - Present",
     description: [
-      "Developed and maintained multiple client-facing web applications",
-      "Integrated third-party APIs and services to enhance application functionality",
-      "Optimized database queries, reducing average query time by 40%"
+      "Various small scale projects ranging from games to web development",
     ]
   },
-  {
-    id: 3,
-    title: "Junior Web Developer",
-    company: "StartUp Ventures",
-    period: "2014 - 2016",
-    description: [
-      "Assisted in the development of responsive web designs",
-      "Collaborated with the design team to implement UI/UX improvements",
-      "Participated in daily stand-ups and sprint planning meetings"
-    ]
-  },
-  {
-    id: 4,
-    title: "Big Chiller",
-    company: "Chilling",
-    period: "Since Birth",
-    description: [
-      "Assisted in the development of responsive web designs",
-      "Collaborated with the design team to implement UI/UX improvements",
-      "Participated in daily stand-ups and sprint planning meetings"
-    ]
-  }
 ]
 
 function ExperienceCard({ experience }: { experience: Experience }) {

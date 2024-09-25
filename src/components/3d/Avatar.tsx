@@ -175,6 +175,8 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
 
   const [welcomeLipSync] = useState<lipSyncJSON>(JSON.parse(welcomeAudioJSON) as lipSyncJSON)
 
+  console.log(welcomeLipSync)
+
   const inactiveVisemeCeiling = 0.4
   const activeVisemeFloor = 0.7
 
@@ -185,8 +187,8 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
       if(nodes.Head_Mesh002.morphTargetInfluences && nodes.Head_Mesh002.morphTargetDictionary && nodes.Teeth_Mesh002.morphTargetInfluences && nodes.Teeth_Mesh002.morphTargetDictionary) {
         const headIndex = nodes.Head_Mesh002.morphTargetDictionary[value]
         const teethIndex = nodes.Teeth_Mesh002.morphTargetDictionary[value]
-        nodes.Head_Mesh002.morphTargetInfluences[headIndex!] = MathUtils.lerp(nodes.Head_Mesh002.morphTargetInfluences[headIndex!]!, 0, inactiveVisemeCeiling)
-        nodes.Teeth_Mesh002.morphTargetInfluences[teethIndex!] = MathUtils.lerp(nodes.Teeth_Mesh002.morphTargetInfluences[teethIndex!]!, 0, inactiveVisemeCeiling)
+        nodes.Head_Mesh002.morphTargetInfluences[headIndex!] = 0
+        nodes.Teeth_Mesh002.morphTargetInfluences[teethIndex!] = 0
       }
     })
 
@@ -198,8 +200,8 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
         const headIndex = nodes.Head_Mesh002.morphTargetDictionary[visemeTarget]!
         const teethIndex = nodes.Teeth_Mesh002.morphTargetDictionary[visemeTarget]!
         if (currentAudioTime >= mouthCue.start && currentAudioTime < mouthCue.end) {
-          nodes.Head_Mesh002.morphTargetInfluences[headIndex] = MathUtils.lerp(nodes.Head_Mesh002.morphTargetInfluences[headIndex]!, 1, activeVisemeFloor)
-          nodes.Teeth_Mesh002.morphTargetInfluences[teethIndex] = MathUtils.lerp(nodes.Teeth_Mesh002.morphTargetInfluences[teethIndex]!, 1, activeVisemeFloor)
+          nodes.Head_Mesh002.morphTargetInfluences[headIndex] = 1
+          nodes.Teeth_Mesh002.morphTargetInfluences[teethIndex] = 1
           break;
         }
       }
