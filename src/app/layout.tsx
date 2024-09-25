@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
       <TRPCReactProvider>
         <html lang="en" className="h-full w-full" >
-          <body className="h-full w-full" >
+          <body className="h-full w-full bg-black" >
             <HydrateClient>
               <AvatarStoreProvider>
                 <Navigation/>

@@ -70,7 +70,9 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
   const group = useRef<Group>(null)
   const { nodes, materials, animations } = useGLTF('/ChrisAvatar.glb', true) as GLTFResult
   const { actions, mixer } = useAnimations(animations, group)
-  const { isSitting, initializing, initialized } = useAvatarStore((state) => state)
+  const { isSitting, isSpeaking, stopSpeaking } = useAvatarStore((state) => state)
+
+  const [pageInitialized, setPageInitialized] = useState(false)
 
   const memoizedMeshes = useMemo(() => (
     <>
@@ -208,6 +210,12 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
   })
 
   useEffect(() => {
+    if (isSpeaking) {
+      welcomeAudio.play().finally(() => {stopSpeaking()}).catch(() => {console.log('Welcome Audio Error')})
+    }
+  }, [isSpeaking])
+
+  useEffect(() => {
 
     const idleSit = () => {
       actions[ActionNames[0]]?.play()
@@ -220,10 +228,13 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
 
     actions[ActionNames[4]]?.play()
 
-    if (initializing) {
-      idleStand()
-      welcomeAudio.play().catch(() => {console.log('Welcome Audio Error')})
-      initialized()
+    if (!pageInitialized) {
+      if(isSitting) {
+        idleSit()
+      } else {
+        idleStand()
+      }
+      setPageInitialized(true)
       return
     }
 
@@ -247,7 +258,7 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
       mixer.removeEventListener('finished', idleSit)
       mixer.removeEventListener('finished', idleStand)
     }
-  }, [isSitting, actions, mixer, initialized])
+  }, [isSitting, actions, mixer])
 
   useFrame((state) => {
      group.current!.getObjectByName("Head_Mesh001")!.lookAt(state.camera.position);

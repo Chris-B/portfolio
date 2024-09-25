@@ -1,17 +1,50 @@
 'use client'
 
-import { useMemo, useState } from "react";
-import { PerspectiveCamera, Environment, OrbitControls } from "@react-three/drei";
+import { useMemo, useRef, useEffect } from "react";
+import { PerspectiveCamera, Environment } from "@react-three/drei";
 import { ChrisAvatar } from '~/components/3d/Avatar'
 import { Office } from '~/components/3d/Office'
 
-import { ProjectMenu, ProjectDetails, type Project } from '~/components/3d/ProjectContent'
+import { useCanvas } from '~/context/canvas-context'
 
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useThree } from '@react-three/fiber'
+
+import * as Three from 'three'
+
+function CanvasLoader() {
+  const { gl } = useThree()
+  const { setCanvasLoaded } = useCanvas()
+
+  useEffect(() => {
+    const handleContextLost = (event: Event) => {
+      if (event instanceof WebGLContextEvent) {
+        event.preventDefault()
+        console.log('WebGL context lost. Trying to restore...')
+        setCanvasLoaded(false)
+      }
+    }
+
+    const handleContextRestored = () => {
+      console.log('WebGL context restored.')
+      setCanvasLoaded(true)
+    }
+
+    gl.domElement.addEventListener('webglcontextlost', handleContextLost)
+    gl.domElement.addEventListener('webglcontextrestored', handleContextRestored)
+
+    // Initial load
+    setCanvasLoaded(true)
+
+    return () => {
+      gl.domElement.removeEventListener('webglcontextlost', handleContextLost)
+      gl.domElement.removeEventListener('webglcontextrestored', handleContextRestored)
+    }
+  }, [gl, setCanvasLoaded])
+
+  return null
+}
 
 export default function SceneCanvas() {
-
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   const cameraProps = useMemo(
     () => ({
@@ -32,7 +65,10 @@ export default function SceneCanvas() {
   }), [])
 
   return (
-      <Canvas>
+      <Canvas onCreated={({ gl }) => {
+        gl.setClearColor(new Three.Color(0, 0, 0))
+      }}>
+        <CanvasLoader />
         <ChrisAvatar position={[0, -0.99, -1] as [number, number, number]} />
         <Office {...officeProps} />
         <PerspectiveCamera {...cameraProps} />

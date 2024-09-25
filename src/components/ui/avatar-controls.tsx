@@ -5,13 +5,17 @@ import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog"
 import { Mic, MessageSquare, Send } from "lucide-react"
-import { useAvatarStore } from "~/providers/avatar-store-provider";
+import { useAvatarStore } from "~/providers/avatar-store-provider"
+
+import { useCanvas } from '~/context/canvas-context'
 
 export default function AvatarControls() {
   const [speechText, setSpeechText] = useState('')
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-  const { isSitting, togglePosition } = useAvatarStore((state) => state)
+  const { isCanvasLoaded } = useCanvas()
+
+  const { isSitting, togglePosition, introSpeech, isSpeaking } = useAvatarStore((state) => state)
 
   const handleStance = () => {
     togglePosition()
@@ -24,13 +28,23 @@ export default function AvatarControls() {
     setIsDialogOpen(false)
   }
 
+  const introduction = () => {
+    if(!isSpeaking) {
+      introSpeech()
+    }
+  }
+
+  if (!isCanvasLoaded) {
+    return null
+  }
+
   return (
     <>
-      <div className="fixed right-0 top-1/2 transform -translate-y-1/2 w-16 bg-black/30 backdrop-blur-md text-white p-2 border-l border-purple-500/30 rounded-l-lg z-50">
-        <div className="space-y-4">
+      <div className="fixed left-1/2 top-[64%] transform -translate-x-1/2 -translate-y-1/2 bg-black/30 backdrop-blur-md text-white p-2 border border-purple-500/30 rounded-lg z-50  md:scale-100 scale-75">
+        <div className="flex space-x-4">
           <Button
             onClick={handleStance}
-            className={`w-full aspect-square ${
+            className={` ${
               isSitting
                 ? "bg-purple-600 hover:bg-purple-700"
                 : "bg-cyan-600 hover:bg-cyan-700"
@@ -43,11 +57,11 @@ export default function AvatarControls() {
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button
-                className="w-full aspect-square bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700
+                className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700
                 text-white border border-transparent transition-all duration-300 ease-in-out
                 hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] focus:shadow-[0_0_20px_rgba(139,92,246,0.7)]"
               >
-                <MessageSquare className="h-6 w-6" />
+                <MessageSquare className="h-4 w-4" />
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] bg-black/80 border border-purple-500/50 text-white">
@@ -77,12 +91,12 @@ export default function AvatarControls() {
             </DialogContent>
           </Dialog>
 
-          <Button
-            className="w-full aspect-square bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700
+          <Button onClick={introduction}
+            className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700
             text-white border border-transparent transition-all duration-300 ease-in-out
             hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] focus:shadow-[0_0_20px_rgba(139,92,246,0.7)]"
           >
-            <Mic className="h-6 w-6" />
+            <Mic className="h-4 w-4" />
           </Button>
         </div>
       </div>
