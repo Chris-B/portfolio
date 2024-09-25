@@ -6,7 +6,7 @@ import SceneCanvas from "~/components/3d/Scene";
 
 import NowPlayingCard from "~/components/ui/now-playing";
 
-import { api, HydrateClient } from "~/trpc/server";
+import { HydrateClient } from "~/trpc/server";
 
 import { CanvasProvider } from '~/context/canvas-context'
 
