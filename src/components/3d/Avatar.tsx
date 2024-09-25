@@ -41,12 +41,12 @@ type GLTFResult = GLTF & {
     avaturn_look_0: SkinnedMesh
     avaturn_shoes_0: SkinnedMesh
     Body_Mesh: SkinnedMesh
-    Eye_Mesh001: SkinnedMesh
-    EyeAO_Mesh001: SkinnedMesh
-    Eyelash_Mesh001: SkinnedMesh
-    Head_Mesh001: SkinnedMesh
-    Teeth_Mesh001: SkinnedMesh
-    Tongue_Mesh001: SkinnedMesh
+    Eye_Mesh002: SkinnedMesh
+    EyeAO_Mesh002: SkinnedMesh
+    Eyelash_Mesh002: SkinnedMesh
+    Head_Mesh002: SkinnedMesh
+    Teeth_Mesh002: SkinnedMesh
+    Tongue_Mesh002: SkinnedMesh
     Hips: Bone
   }
   materials: {
@@ -64,96 +64,108 @@ type GLTFResult = GLTF & {
   }
 }
 
-const ActionNames = ['SittingIdle','SitToStand','StandingIdle','StandToSit', 'avaturn_animation'] as const
+const ActionNames = ['SittingIdle','SitToStand','StandingIdleNew','StandToSit', 'avaturn_animation', 'SillyDancing'] as const
 
 export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
   const group = useRef<Group>(null)
   const { nodes, materials, animations } = useGLTF('/ChrisAvatar.glb', true) as GLTFResult
   const { actions, mixer } = useAnimations(animations, group)
-  const { isSitting, isSpeaking, stopSpeaking } = useAvatarStore((state) => state)
+  const { isSitting, isSpeaking, stopSpeaking, isDancing } = useAvatarStore((state) => state)
 
   const [pageInitialized, setPageInitialized] = useState(false)
 
   const memoizedMeshes = useMemo(() => (
     <>
       <skinnedMesh
-        name="avaturn_hair_0"
-        geometry={nodes.avaturn_hair_0.geometry}
-        material={materials['avaturn_hair_0_material.001']}
-        skeleton={nodes.avaturn_hair_0.skeleton}
-      />
-      <skinnedMesh
-        name="avaturn_hair_1"
-        geometry={nodes.avaturn_hair_1.geometry}
-        material={materials['avaturn_hair_1_material.001']}
-        skeleton={nodes.avaturn_hair_1.skeleton}
-      />
-      <skinnedMesh
-        name="avaturn_look_0"
-        geometry={nodes.avaturn_look_0.geometry}
-        material={materials['avaturn_look_0_material.001']}
-        skeleton={nodes.avaturn_look_0.skeleton}
-      />
-      <skinnedMesh
-        name="avaturn_shoes_0"
-        geometry={nodes.avaturn_shoes_0.geometry}
-        material={materials['avaturn_shoes_0_material.001']}
-        skeleton={nodes.avaturn_shoes_0.skeleton}
-      />
-      <skinnedMesh
-        name="Body_Mesh"
-        geometry={nodes.Body_Mesh.geometry}
-        material={materials['Body.001']}
-        skeleton={nodes.Body_Mesh.skeleton}
-      />
-      <skinnedMesh
-        name="Eye_Mesh001"
-        geometry={nodes.Eye_Mesh001.geometry}
-        material={materials['Eyes.001']}
-        skeleton={nodes.Eye_Mesh001.skeleton}
-        morphTargetDictionary={nodes.Eye_Mesh001.morphTargetDictionary}
-        morphTargetInfluences={nodes.Eye_Mesh001.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="EyeAO_Mesh001"
-        geometry={nodes.EyeAO_Mesh001.geometry}
-        material={materials['EyeAO.001']}
-        skeleton={nodes.EyeAO_Mesh001.skeleton}
-        morphTargetDictionary={nodes.EyeAO_Mesh001.morphTargetDictionary}
-        morphTargetInfluences={nodes.EyeAO_Mesh001.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="Eyelash_Mesh001"
-        geometry={nodes.Eyelash_Mesh001.geometry}
-        material={materials['Eyelash.001']}
-        skeleton={nodes.Eyelash_Mesh001.skeleton}
-        morphTargetDictionary={nodes.Eyelash_Mesh001.morphTargetDictionary}
-        morphTargetInfluences={nodes.Eyelash_Mesh001.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="Head_Mesh001"
-        geometry={nodes.Head_Mesh001.geometry}
-        material={materials['Head.001']}
-        skeleton={nodes.Head_Mesh001.skeleton}
-        morphTargetDictionary={nodes.Head_Mesh001.morphTargetDictionary}
-        morphTargetInfluences={nodes.Head_Mesh001.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="Teeth_Mesh001"
-        geometry={nodes.Teeth_Mesh001.geometry}
-        material={materials['Teeth.002']}
-        skeleton={nodes.Teeth_Mesh001.skeleton}
-        morphTargetDictionary={nodes.Teeth_Mesh001.morphTargetDictionary}
-        morphTargetInfluences={nodes.Teeth_Mesh001.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="Tongue_Mesh001"
-        geometry={nodes.Tongue_Mesh001.geometry}
-        material={materials['Teeth.003']}
-        skeleton={nodes.Tongue_Mesh001.skeleton}
-        morphTargetDictionary={nodes.Tongue_Mesh001.morphTargetDictionary}
-        morphTargetInfluences={nodes.Tongue_Mesh001.morphTargetInfluences}
-      />
+            name="avaturn_hair_0"
+            geometry={nodes.avaturn_hair_0.geometry}
+            material={materials['avaturn_hair_0_material.001']}
+            skeleton={nodes.avaturn_hair_0.skeleton}
+          />
+          <skinnedMesh
+            name="avaturn_hair_1"
+            geometry={nodes.avaturn_hair_1.geometry}
+            material={materials['avaturn_hair_1_material.001']}
+            skeleton={nodes.avaturn_hair_1.skeleton}
+          />
+          <skinnedMesh
+            name="avaturn_look_0"
+            geometry={nodes.avaturn_look_0.geometry}
+            material={materials['avaturn_look_0_material.001']}
+            skeleton={nodes.avaturn_look_0.skeleton}
+          />
+          <skinnedMesh
+            name="avaturn_shoes_0"
+            geometry={nodes.avaturn_shoes_0.geometry}
+            material={materials['avaturn_shoes_0_material.001']}
+            skeleton={nodes.avaturn_shoes_0.skeleton}
+          />
+          <skinnedMesh
+            name="Body_Mesh"
+            geometry={nodes.Body_Mesh.geometry}
+            material={materials['Body.001']}
+            skeleton={nodes.Body_Mesh.skeleton}
+          />
+          <group name="Eye_Mesh" />
+          <group name="Eye_Mesh001" />
+          <skinnedMesh
+            name="Eye_Mesh002"
+            geometry={nodes.Eye_Mesh002.geometry}
+            material={materials['Eyes.001']}
+            skeleton={nodes.Eye_Mesh002.skeleton}
+            morphTargetDictionary={nodes.Eye_Mesh002.morphTargetDictionary}
+            morphTargetInfluences={nodes.Eye_Mesh002.morphTargetInfluences}
+          />
+          <group name="EyeAO_Mesh" />
+          <group name="EyeAO_Mesh001" />
+          <skinnedMesh
+            name="EyeAO_Mesh002"
+            geometry={nodes.EyeAO_Mesh002.geometry}
+            material={materials['EyeAO.001']}
+            skeleton={nodes.EyeAO_Mesh002.skeleton}
+            morphTargetDictionary={nodes.EyeAO_Mesh002.morphTargetDictionary}
+            morphTargetInfluences={nodes.EyeAO_Mesh002.morphTargetInfluences}
+          />
+          <group name="Eyelash_Mesh" />
+          <group name="Eyelash_Mesh001" />
+          <skinnedMesh
+            name="Eyelash_Mesh002"
+            geometry={nodes.Eyelash_Mesh002.geometry}
+            material={materials['Eyelash.001']}
+            skeleton={nodes.Eyelash_Mesh002.skeleton}
+            morphTargetDictionary={nodes.Eyelash_Mesh002.morphTargetDictionary}
+            morphTargetInfluences={nodes.Eyelash_Mesh002.morphTargetInfluences}
+          />
+          <group name="Head_Mesh" />
+          <group name="Head_Mesh001" />
+          <skinnedMesh
+            name="Head_Mesh002"
+            geometry={nodes.Head_Mesh002.geometry}
+            material={materials['Head.001']}
+            skeleton={nodes.Head_Mesh002.skeleton}
+            morphTargetDictionary={nodes.Head_Mesh002.morphTargetDictionary}
+            morphTargetInfluences={nodes.Head_Mesh002.morphTargetInfluences}
+          />
+          <group name="Teeth_Mesh" />
+          <group name="Teeth_Mesh001" />
+          <skinnedMesh
+            name="Teeth_Mesh002"
+            geometry={nodes.Teeth_Mesh002.geometry}
+            material={materials['Teeth.002']}
+            skeleton={nodes.Teeth_Mesh002.skeleton}
+            morphTargetDictionary={nodes.Teeth_Mesh002.morphTargetDictionary}
+            morphTargetInfluences={nodes.Teeth_Mesh002.morphTargetInfluences}
+          />
+          <group name="Tongue_Mesh" />
+          <group name="Tongue_Mesh001" />
+          <skinnedMesh
+            name="Tongue_Mesh002"
+            geometry={nodes.Tongue_Mesh002.geometry}
+            material={materials['Teeth.003']}
+            skeleton={nodes.Tongue_Mesh002.skeleton}
+            morphTargetDictionary={nodes.Tongue_Mesh002.morphTargetDictionary}
+            morphTargetInfluences={nodes.Tongue_Mesh002.morphTargetInfluences}
+          />
     </>
   ), [nodes, materials])
 
@@ -163,25 +175,18 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
 
   const [welcomeLipSync] = useState<lipSyncJSON>(JSON.parse(welcomeAudioJSON) as lipSyncJSON)
 
+  const inactiveVisemeCeiling = 0.4
+  const activeVisemeFloor = 0.7
+
 
   useFrame(() => {
 
     Object.values(visemeTargets).forEach((value) => {
-      if(nodes.Head_Mesh001.morphTargetInfluences && nodes.Head_Mesh001.morphTargetDictionary && nodes.Teeth_Mesh001.morphTargetInfluences && nodes.Teeth_Mesh001.morphTargetDictionary) {
-        const headIndex = nodes.Head_Mesh001.morphTargetDictionary[value]
-        const teethIndex = nodes.Teeth_Mesh001.morphTargetDictionary[value]
-
-          nodes.Head_Mesh001.morphTargetInfluences[headIndex!] = MathUtils.lerp(
-            nodes.Head_Mesh001.morphTargetInfluences[headIndex!]!,
-            0,
-            0.4
-          )
-
-          nodes.Teeth_Mesh001.morphTargetInfluences[teethIndex!] = MathUtils.lerp(
-            nodes.Teeth_Mesh001.morphTargetInfluences[teethIndex!]!,
-            0,
-            0.4
-          )
+      if(nodes.Head_Mesh002.morphTargetInfluences && nodes.Head_Mesh002.morphTargetDictionary && nodes.Teeth_Mesh002.morphTargetInfluences && nodes.Teeth_Mesh002.morphTargetDictionary) {
+        const headIndex = nodes.Head_Mesh002.morphTargetDictionary[value]
+        const teethIndex = nodes.Teeth_Mesh002.morphTargetDictionary[value]
+        nodes.Head_Mesh002.morphTargetInfluences[headIndex!] = MathUtils.lerp(nodes.Head_Mesh002.morphTargetInfluences[headIndex!]!, 0, inactiveVisemeCeiling)
+        nodes.Teeth_Mesh002.morphTargetInfluences[teethIndex!] = MathUtils.lerp(nodes.Teeth_Mesh002.morphTargetInfluences[teethIndex!]!, 0, inactiveVisemeCeiling)
       }
     })
 
@@ -189,20 +194,12 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
     for (const mouthCue of welcomeLipSync.mouthCues) {
       const mouthCueValue = mouthCue.value
       const visemeTarget = visemeTargets[mouthCueValue]!
-      if(nodes.Head_Mesh001.morphTargetInfluences && nodes.Head_Mesh001.morphTargetDictionary && nodes.Teeth_Mesh001.morphTargetInfluences && nodes.Teeth_Mesh001.morphTargetDictionary) {
-        const headIndex = nodes.Head_Mesh001.morphTargetDictionary[visemeTarget]!
-        const teethIndex = nodes.Teeth_Mesh001.morphTargetDictionary[visemeTarget]!
+      if(nodes.Head_Mesh002.morphTargetInfluences && nodes.Head_Mesh002.morphTargetDictionary && nodes.Teeth_Mesh002.morphTargetInfluences && nodes.Teeth_Mesh002.morphTargetDictionary) {
+        const headIndex = nodes.Head_Mesh002.morphTargetDictionary[visemeTarget]!
+        const teethIndex = nodes.Teeth_Mesh002.morphTargetDictionary[visemeTarget]!
         if (currentAudioTime >= mouthCue.start && currentAudioTime < mouthCue.end) {
-          nodes.Head_Mesh001.morphTargetInfluences[headIndex] = MathUtils.lerp(
-              nodes.Head_Mesh001.morphTargetInfluences[headIndex]!,
-              1,
-              0.7
-            )
-          nodes.Teeth_Mesh001.morphTargetInfluences[teethIndex] = MathUtils.lerp(
-              nodes.Teeth_Mesh001.morphTargetInfluences[teethIndex]!,
-              1,
-              0.7
-            )
+          nodes.Head_Mesh002.morphTargetInfluences[headIndex] = MathUtils.lerp(nodes.Head_Mesh002.morphTargetInfluences[headIndex]!, 1, activeVisemeFloor)
+          nodes.Teeth_Mesh002.morphTargetInfluences[teethIndex] = MathUtils.lerp(nodes.Teeth_Mesh002.morphTargetInfluences[teethIndex]!, 1, activeVisemeFloor)
           break;
         }
       }
@@ -228,40 +225,34 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
 
     actions[ActionNames[4]]?.play()
 
-    if (!pageInitialized) {
-      if(isSitting) {
-        idleSit()
-      } else {
-        idleStand()
-      }
+    if (!pageInitialized) { // Set avatar to correct idle state and skip standing up or sitting down action.
+      if(isSitting) idleSit(); else idleStand();
       setPageInitialized(true)
       return
     }
 
-    if (isSitting) {
-      const sitAction = actions[ActionNames[3]]
-      if (sitAction) {
-        sitAction.clampWhenFinished = true
-        sitAction.reset().setLoop(LoopOnce, 1).play()
-        mixer.addEventListener('finished', idleSit)
-      }
-    } else {
-      const standAction = actions[ActionNames[1]]
-      if (standAction) {
-        standAction.clampWhenFinished = true
-        standAction.reset().setLoop(LoopOnce, 1).play()
-        mixer.addEventListener('finished', idleStand)
-      }
+    const nextAction = actions[ActionNames[isSitting ? 3 : 1]] // Sit down or stand up action
+    if (nextAction) {
+      nextAction.clampWhenFinished = true
+      nextAction.reset().setLoop(LoopOnce, 1).play()
+      mixer.addEventListener('finished', isSitting ? idleSit : idleStand)
     }
 
     return () => {
       mixer.removeEventListener('finished', idleSit)
       mixer.removeEventListener('finished', idleStand)
     }
+
   }, [isSitting, actions, mixer])
 
+  useEffect(() => { // Dancing Animation
+    mixer.stopAllAction()
+    actions[ActionNames[4]]?.play()
+    actions[ActionNames[isDancing ? 5 : isSitting ? 0 : 2]]?.play()
+  }, [isDancing, actions, mixer])
+
   useFrame((state) => {
-     group.current!.getObjectByName("Head_Mesh001")!.lookAt(state.camera.position);
+     group.current!.getObjectByName("Head_Mesh002")!.lookAt(state.camera.position);
   });
 
   return (
