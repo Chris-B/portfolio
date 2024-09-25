@@ -1,9 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { Github, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react'
-import { Button } from "~/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "~/components/ui/card"
+import React from 'react'
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "~/components/ui/card"
 
 interface Experience {
   id: number;

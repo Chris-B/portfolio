@@ -7,8 +7,6 @@ import Footer from "~/components/ui/footer";
 
 import Navigation from "~/components/ui/navigation";
 
-import Script from 'next/script'
-
 import { TRPCReactProvider } from '~/trpc/react'
 import { HydrateClient } from "~/trpc/server";
 
