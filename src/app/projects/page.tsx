@@ -136,7 +136,10 @@ function ProjectCard({ project }: { project: Project }) {
 export default function Home() {
 
   return (
-    <div className="min-h-screen bg-black text-white p-20">
+    <div className="min-h-screen bg-black text-white pt-20 pb-20 px-5">
+      <h1 className="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
+        Projects
+      </h1>
       <div className="space-y-8">
         {projects.map(project => (
           <ProjectCard key={project.id} project={project} />

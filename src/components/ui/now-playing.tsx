@@ -23,7 +23,7 @@ export default function NowPlayingCard() {
   }
 
   return (
-    <div className="fixed left-2 top-[15%] z-50 md:scale-100 scale-90">
+    <div className="fixed left-2 top-[15%] z-10 md:scale-100 scale-90">
       <Button
         className="md:hidden mb-2 bg-black/30 border border-purple-500 text-white hover:bg-black/50"
         onClick={() => setIsOpen(!isOpen)}
