@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from "react";
-import { Music, ChevronUp, ChevronDown } from 'lucide-react'
+import { Music } from 'lucide-react'
 import { Progress } from "~/components/ui/progress"
 import { api } from "~/trpc/react";
 import { useCanvas } from "~/context/canvas-context";
