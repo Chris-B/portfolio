@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "soundFile": "C:\\Users\\c_bar\\Documents\\Professional\\Portfolio Website\\avachris\\public\\audio\\Portfolio Introduction.wav",
+    "duration": 3.78
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.18, "value": "X" },
+    { "start": 0.18, "end": 0.29, "value": "C" },
+    { "start": 0.29, "end": 0.43, "value": "B" },
+    { "start": 0.43, "end": 0.57, "value": "C" },
+    { "start": 0.57, "end": 0.64, "value": "B" },
+    { "start": 0.64, "end": 0.74, "value": "A" },
+    { "start": 0.74, "end": 0.91, "value": "C" },
+    { "start": 0.91, "end": 0.99, "value": "A" },
+    { "start": 0.99, "end": 1.29, "value": "B" },
+    { "start": 1.29, "end": 1.36, "value": "C" },
+    { "start": 1.36, "end": 1.99, "value": "B" },
+    { "start": 1.99, "end": 2.08, "value": "A" },
+    { "start": 2.08, "end": 2.12, "value": "C" },
+    { "start": 2.12, "end": 2.16, "value": "B" },
+    { "start": 2.16, "end": 2.23, "value": "G" },
+    { "start": 2.23, "end": 2.37, "value": "E" },
+    { "start": 2.37, "end": 2.51, "value": "F" },
+    { "start": 2.51, "end": 2.58, "value": "C" },
+    { "start": 2.58, "end": 2.66, "value": "A" },
+    { "start": 2.66, "end": 2.80, "value": "E" },
+    { "start": 2.80, "end": 2.94, "value": "B" },
+    { "start": 2.94, "end": 3.01, "value": "G" },
+    { "start": 3.01, "end": 3.08, "value": "F" },
+    { "start": 3.08, "end": 3.22, "value": "B" },
+    { "start": 3.22, "end": 3.36, "value": "E" },
+    { "start": 3.36, "end": 3.50, "value": "F" },
+    { "start": 3.50, "end": 3.64, "value": "B" },
+    { "start": 3.64, "end": 3.78, "value": "X" }
+  ]
+}
