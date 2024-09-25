@@ -13,7 +13,7 @@ import { HydrateClient } from "~/trpc/server";
 export const metadata: Metadata = {
   title: "Chris Barclay",
   description: "Software Development Portfolio",
-  authors: "Chris Barclay",
+  authors: [{name: "Chris Barclay", url: "chrisbarclay.dev"}],
   publisher: "Data Dynamics LLC",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
