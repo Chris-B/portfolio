@@ -1,53 +1,98 @@
-import Link from "next/link";
+'use client'
 
-import { LatestPost } from "~/app/_components/post";
-import { api, HydrateClient } from "~/trpc/server";
+import Link from "next/link"
 
-export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
+const GridLine: React.FC<{ className: string }> = ({ className }) => (
+  <div className={className}></div>
+)
 
-  void api.post.getLatest.prefetch();
+export default function Home() {
+  const verticalLines = Array.from({ length: 6 }, (_, i) => (
+    <GridLine key={`v-${i}`} className="h-full w-px bg-cyan-500/20" />
+  ))
+
+  const horizontalLines = Array.from({ length: 6 }, (_, i) => (
+    <GridLine key={`h-${i}`} className="w-full h-px bg-cyan-500/20" />
+  ))
 
   return (
-    <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-          </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
-              <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Documentation →</h3>
-              <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
-              </div>
-            </Link>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello ? hello.greeting : "Loading tRPC query..."}
-            </p>
-          </div>
+    <main className="min-h-screen bg-black flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Cyberpunk-inspired background elements */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+      </div>
 
-          <LatestPost />
-        </div>
-      </main>
-    </HydrateClient>
-  );
+      {/* Grid lines */}
+      <div className="absolute inset-0 z-10 grid grid-cols-6 gap-2 opacity-20">
+        {verticalLines}
+        {horizontalLines}
+      </div>
+
+      {/* Content */}
+      <div className="z-20 text-center relative">
+        <h1 className="text-6xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 animate-pulse">
+          Chris Barclay
+        </h1>
+        <Link href="/dashboard">
+          <button className="group">
+            <span className="sr-only">Enter</span>
+            {'ENTER'.split('').map((letter, index) => (
+              <span
+                key={index}
+                className="inline-block text-5xl font-bold transition-all duration-300 ease-in-out
+                           hover:text-cyan-400 group-hover:animate-float"
+                style={{
+                  textShadow: `
+                    1px 1px 0 #8B5CF6,
+                    2px 2px 0 #7C3AED,
+                    3px 3px 0 #6D28D9,
+                    4px 4px 0 #5B21B6,
+                    5px 5px 0 #4C1D95,
+                    6px 6px 10px rgba(0, 0, 0, 0.5)
+                  `,
+                  animation: `float 2s ease-in-out infinite ${index * 0.1}s`,
+                  color: '#E5E7EB', // Light gray color
+                }}
+              >
+                {letter}
+              </span>
+            ))}
+          </button>
+        </Link>
+      </div>
+
+      {/* Keyframe animations */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        @keyframes blob {
+          0% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
+    </main>
+  )
 }
