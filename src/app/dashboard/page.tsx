@@ -1,7 +1,7 @@
 import AvatarControls from "~/components/ui/avatar-controls";
 
 import { Suspense } from "react";
-import Loading from "./loading";
+import Loading from "~/components/ui/loading";
 import SceneCanvas from "~/components/3d/Scene";
 
 import NowPlayingCard from "~/components/ui/now-playing";
