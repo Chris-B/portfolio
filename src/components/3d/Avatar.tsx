@@ -175,11 +175,6 @@ export function ChrisAvatar(props: JSX.IntrinsicElements['group']) {
 
   const [welcomeLipSync] = useState<lipSyncJSON>(JSON.parse(welcomeAudioJSON) as lipSyncJSON)
 
-  console.log(welcomeLipSync)
-
-  const inactiveVisemeCeiling = 0.4
-  const activeVisemeFloor = 0.7
-
 
   useFrame(() => {
 

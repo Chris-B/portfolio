@@ -17,7 +17,7 @@ import {
 
       const { camera } = useThree();
       useEffect(()=>{
-          camera.position.z = -200;
+          camera.position.z = -1200;
       });
       const [orbitEnabled,setOrbitEnabled] = useState(false);
       const  [firstTime, setFirstTime] = useState(true);
@@ -48,7 +48,7 @@ import {
   export default function AudioVisualizer() {
       const [link, setLink] = useState('');
       useEffect(()=>{
-         setLink('/video/SHAED - Trampoline.mp4');
+         setLink('/video/Zeds Dead x MKLA - Alive.mp4');
       }, [])
 
       return (

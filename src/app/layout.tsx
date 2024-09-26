@@ -3,6 +3,7 @@ import "~/styles/globals.css";
 import { type Metadata } from "next";
 
 import { AvatarStoreProvider } from "~/providers/avatar-store-provider"
+import { VideoStoreProvider } from "~/providers/video-store-provider"
 import Footer from "~/components/ui/footer";
 
 import Navigation from "~/components/ui/navigation";
@@ -27,9 +28,11 @@ export default function RootLayout({
           <body className="h-full w-full bg-black" >
             <HydrateClient>
               <AvatarStoreProvider>
+                <VideoStoreProvider>
                 <Navigation/>
                 {children}
                 <Footer/>
+                </VideoStoreProvider>
               </AvatarStoreProvider>
             </HydrateClient>
           </body>
