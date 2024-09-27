@@ -22,13 +22,11 @@ function loadAudio(audioBuffer: AudioBuffer) {
 
 }
 
-export default function VideoControls() {
-  const { videoLoaded, isPlaying, setIsPlaying, audio, videoElement, videoSrc, audioLoaded, setAudio } = useVideoStore((state) => state)
-
-  const audioBuffer = useLoader(THREE.AudioLoader, videoSrc)
+export const VideoControls = () => {
+  const { videoLoaded, isPlaying, setIsPlaying, audio, videoElement, audioLoaded, setAudio, audioBuffer } = useVideoStore((state) => state)
 
   const toggleVideo = () => {
-    if (!audioLoaded) {
+    if (!audioLoaded && audioBuffer) {
       const tempAudio = loadAudio(audioBuffer)
       if (tempAudio) {
         setAudio(tempAudio)

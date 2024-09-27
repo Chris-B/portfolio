@@ -11,6 +11,7 @@ export type VideoState = {
   videoElement: HTMLVideoElement | null,
   audio: THREE.Audio | null,
   videoSrc: string,
+  audioBuffer: AudioBuffer | null,
 }
 
 export type VideoActions = {
@@ -20,6 +21,7 @@ export type VideoActions = {
   setVideoElement: (videoElement: HTMLVideoElement) => void,
   setAudio: (audio: THREE.Audio) => void,
   setVideoSrc: (videoSrc: string) => void,
+  setAudioBuffer: (audioBuffer: AudioBuffer) => void,
 }
 
 export type VideoStore = VideoState & VideoActions
@@ -30,7 +32,8 @@ export const defaultInitState: VideoState = {
   videoLoaded: false,
   videoElement: null,
   audio: null,
-  videoSrc: '/video/Zeds Dead - Alive.mp4',
+  videoSrc: '/music-videos/Zeds Dead - Alive.mp4',
+  audioBuffer: null
 }
 
 export const createVideoStore = (
@@ -44,5 +47,6 @@ export const createVideoStore = (
           setVideoElement: (element: HTMLVideoElement ) => set(() => ({ videoElement: element })),
           setAudio: (audio: THREE.Audio ) => set(() => ({ audio: audio })),
           setVideoSrc: (videoSrc: string) => set(() => ({ videoSrc: videoSrc })),
+          setAudioBuffer: (audioBuffer: AudioBuffer) => set(() => ({ audioBuffer: audioBuffer })),
   }))
 }
