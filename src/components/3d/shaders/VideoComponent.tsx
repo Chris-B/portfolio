@@ -29,7 +29,8 @@ function loadAudio(audioBuffer: AudioBuffer) {
         const audioTemp = new THREE.Audio(audioListener);
         audioTemp.setBuffer(audioBuffer);
         audioTemp.setLoop(true);
-        audioTemp.setVolume(0.5);
+        audioTemp.autoplay = false;
+        audioTemp.setVolume(0);
         return audioTemp
     }
 
