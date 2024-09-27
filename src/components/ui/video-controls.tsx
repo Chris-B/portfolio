@@ -34,7 +34,7 @@ export default function VideoControls() {
       if (tempAudio) {
         setAudio(tempAudio)
       }
-      console.log("Loading Audio")
+      console.log("Loading Audio 2")
     }
     if (audio && videoElement) {
       if (!isPlaying) {
