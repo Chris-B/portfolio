@@ -12,7 +12,7 @@ export default function VideoControls() {
       if (!isPlaying) {
         setIsPlaying(true)
         audio.setVolume(0.5)
-        void audio.listener.context.resume().then(() => audio.play())
+        audio.play()
         void videoElement.play()
       } else {
         setIsPlaying(false)
