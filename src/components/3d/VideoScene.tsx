@@ -12,6 +12,7 @@ import {
 
   import { OrbitControls } from "@react-three/drei";
   import { VideoComponent } from "~/components/3d/shaders/VideoComponent";
+import { VideoControls } from "~/components/ui/video-controls";
 
   export function Scene() {
 
@@ -48,6 +49,7 @@ import {
       return (
           <>
               <Canvas className="canvas" style={{backgroundColor:'#000000', position:'absolute', width:'100%', height:'100vh'}} camera={{far:20000}}>
+                <VideoControls/>
                 <Scene/>
               </Canvas>
           </>

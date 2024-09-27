@@ -39,9 +39,7 @@ export const VideoComponent = ({type='MusicShader' }: VideoProps) => {
           density = 1;
       `;
 
-    const { videoLoaded, audioLoaded, setLoaded, setAudioLoaded, setIsPlaying, videoElement, setVideoElement, audio, setAudio, videoSrc, setAudioBuffer } = useVideoStore((state) => state)
-
-    setAudioBuffer(useLoader(THREE.AudioLoader, videoSrc))
+    const { videoLoaded, audioLoaded, setLoaded, setAudioLoaded, setIsPlaying, videoElement, setVideoElement, audio, setAudio, videoSrc } = useVideoStore((state) => state)
 
     useEffect(() => {
         setLoaded(false)

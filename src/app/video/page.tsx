@@ -8,7 +8,6 @@ export default function Home() {
   return (
       <HydrateClient>
         <div className="h-full w-full">
-          <VideoControls/>
           <div className="relative h-full w-full">
               <div className="absolute inset-0 z-0">
                   <VideoScene/>

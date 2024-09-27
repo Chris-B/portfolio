@@ -23,10 +23,12 @@ function loadAudio(audioBuffer: AudioBuffer) {
 }
 
 export const VideoControls = () => {
-  const { videoLoaded, isPlaying, setIsPlaying, audio, videoElement, audioLoaded, setAudio, audioBuffer } = useVideoStore((state) => state)
+  const { videoLoaded, isPlaying, setIsPlaying, audio, videoElement, audioLoaded, setAudio, videoSrc } = useVideoStore((state) => state)
+
+  const audioBuffer = useLoader(THREE.AudioLoader, '/music-videos/Zeds Dead - Alive.mp4')
 
   const toggleVideo = () => {
-    if (!audioLoaded && audioBuffer) {
+    if (audioBuffer && !audioLoaded) {
       const tempAudio = loadAudio(audioBuffer)
       if (tempAudio) {
         setAudio(tempAudio)
@@ -48,23 +50,30 @@ export const VideoControls = () => {
   }
 
   return (
-    <div className="fixed left-1/2 top-[80%] transform -translate-x-1/2 -translate-y-1/2 bg-black/30 backdrop-blur-md text-white p-4 border border-purple-500/30 rounded-lg z-50 md:scale-100 scale-75">
-      <div className="flex flex-col items-center justify-center h-16">
-        {!videoLoaded ? (
-          <div className="flex flex-col items-center">
-            <Loader2 className="h-8 w-8 animate-spin text-cyan-500" aria-hidden="true" />
-            <p className="text-sm mt-2" aria-live="polite">Loading video...</p>
-          </div>
-        ) : (
-          <Button
-            onClick={toggleVideo}
-            className="bg-cyan-600 hover:bg-cyan-700 text-white border border-transparent transition-all duration-300 ease-in-out
-            hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] focus:shadow-[0_0_20px_rgba(139,92,246,0.7)]"
-          >
-            {isPlaying ? 'Stop' : 'Play'}
-          </Button>
-        )}
-      </div>
-    </div>
+    videoLoaded && !isPlaying ? (
+    <mesh onClick={toggleVideo}>
+      <boxGeometry args={[300, 300, 1]} />
+      <meshStandardMaterial color={isPlaying ? 'green' : 'red'} />
+    </mesh>
+    ) :
+      null
+    // <div className="fixed left-1/2 top-[80%] transform -translate-x-1/2 -translate-y-1/2 bg-black/30 backdrop-blur-md text-white p-4 border border-purple-500/30 rounded-lg z-50 md:scale-100 scale-75">
+    //   <div className="flex flex-col items-center justify-center h-16">
+    //     {!videoLoaded ? (
+    //       <div className="flex flex-col items-center">
+    //         <Loader2 className="h-8 w-8 animate-spin text-cyan-500" aria-hidden="true" />
+    //         <p className="text-sm mt-2" aria-live="polite">Loading video...</p>
+    //       </div>
+    //     ) : (
+    //       <Button
+    //         onClick={toggleVideo}
+    //         className="bg-cyan-600 hover:bg-cyan-700 text-white border border-transparent transition-all duration-300 ease-in-out
+    //         hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] focus:shadow-[0_0_20px_rgba(139,92,246,0.7)]"
+    //       >
+    //         {isPlaying ? 'Stop' : 'Play'}
+    //       </Button>
+    //     )}
+    //   </div>
+    // </div>
   )
 }
