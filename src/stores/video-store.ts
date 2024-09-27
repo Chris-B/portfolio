@@ -1,3 +1,5 @@
+'use client'
+
 import { createStore } from 'zustand/vanilla'
 
 import * as THREE from "three";
@@ -28,7 +30,7 @@ export const defaultInitState: VideoState = {
   videoLoaded: false,
   videoElement: null,
   audio: null,
-  videoSrc: '/video/Zeds Dead X Mkla - Alive.mp4',
+  videoSrc: '/video/Zeds Dead - Alive.mp4',
 }
 
 export const createVideoStore = (
