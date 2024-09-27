@@ -5,7 +5,6 @@ import { useVideoStore } from "~/providers/video-store-provider"
 import { Loader2 } from "lucide-react"
 import * as THREE from "three";
 import { useLoader } from "@react-three/fiber";
-import { useEffect } from "react";
 
 function loadAudio(audioBuffer: AudioBuffer) {
 
@@ -34,7 +33,7 @@ export default function VideoControls() {
       if (tempAudio) {
         setAudio(tempAudio)
       }
-      console.log("Loading Audio 2")
+      console.log("Loading Audio")
     }
     if (audio && videoElement) {
       if (!isPlaying) {
