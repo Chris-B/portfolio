@@ -22,6 +22,22 @@ function loadVideo(videoSrc: string) {
     return video
 }
 
+function loadAudio(audioBuffer: AudioBuffer) {
+
+    if(audioBuffer){
+        const audioListener = new THREE.AudioListener();
+        const audioTemp = new THREE.Audio(audioListener);
+        audioTemp.setBuffer(audioBuffer);
+        audioTemp.setLoop(true);
+        audioTemp.autoplay = false;
+        audioTemp.setVolume(0);
+        return audioTemp
+    }
+
+    return null
+
+}
+
 
 type VideoProps = {
     type?: string,
@@ -48,7 +64,16 @@ export const VideoComponent = ({type='MusicShader' }: VideoProps) => {
         console.log("Reset Video and Audio")
     }, [videoSrc]);
 
+    const audioBuffer = useLoader(THREE.AudioLoader, videoSrc)
+
     useEffect(() => {
+        if(!audioLoaded) {
+            const tempAudio = loadAudio(audioBuffer)
+            if (tempAudio) {
+                setAudio(tempAudio)
+            }
+            console.log("Loading Audio")
+        }
         if(!videoLoaded) {
             setVideoElement(loadVideo(videoSrc));
             console.log("Loading Video")
