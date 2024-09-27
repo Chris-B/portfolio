@@ -5,16 +5,20 @@ import { useVideoStore } from "~/providers/video-store-provider"
 import { Loader2 } from "lucide-react"
 
 export default function VideoControls() {
-  const { videoLoaded, isPlaying, setIsPlaying } = useVideoStore((state) => state)
+  const { videoLoaded, isPlaying, setIsPlaying, audio, videoElement } = useVideoStore((state) => state)
 
-  const playVideo = () => {
-    if (!isPlaying) {
-      setIsPlaying(true)
+  const toggleVideo = () => {
+    if (audio && videoElement) {
+      if (!isPlaying) {
+        setIsPlaying(true)
+        void audio.listener.context.resume().then(() => audio.play())
+        void videoElement.play()
+      } else {
+        setIsPlaying(false)
+        audio.pause()
+        videoElement.pause()
+      }
     }
-  }
-
-  if (isPlaying) {
-    return null
   }
 
   return (
@@ -27,11 +31,11 @@ export default function VideoControls() {
           </div>
         ) : (
           <Button
-            onClick={playVideo}
+            onClick={toggleVideo}
             className="bg-cyan-600 hover:bg-cyan-700 text-white border border-transparent transition-all duration-300 ease-in-out
             hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] focus:shadow-[0_0_20px_rgba(139,92,246,0.7)]"
           >
-            Play
+            {isPlaying ? 'Stop' : 'Play'}
           </Button>
         )}
       </div>

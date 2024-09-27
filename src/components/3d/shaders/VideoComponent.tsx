@@ -336,12 +336,13 @@ export const VideoPointsShader = ({ audio, video, shaderType='VideoShader1', con
         treble: [5200, 14000],
     };
 
-    const { isPlaying, audioLoaded } = useVideoStore((state) => state)
+    const { audioLoaded } = useVideoStore((state) => state)
 
     const [analyser, setAnalyser] = useState<THREE.AudioAnalyser>();
 
     useEffect(()=>{
         if(audio){
+            console.log("Set Audio Analyser")
             setAnalyser(new THREE.AudioAnalyser(audio, fftSize));
         }
     },[audioLoaded]);
@@ -349,16 +350,6 @@ export const VideoPointsShader = ({ audio, video, shaderType='VideoShader1', con
     const {scene} = useThree();
 
     const [particles, setParticles] = useState<THREE.Points | null>(null);
-
-    useEffect(()=>{
-        if(isPlaying) {
-            void video?.play();
-            void audio.listener.context.resume().then(() => audio.play())
-        } else {
-            video?.pause()
-            audio.pause()
-        }
-    }, [isPlaying]);
 
     useEffect(()=>{
         return () => {
@@ -371,6 +362,7 @@ export const VideoPointsShader = ({ audio, video, shaderType='VideoShader1', con
     useFrame(({clock})=>{
 
         if( !particles && video && video.readyState === 4 ){
+            console.log('setting particles')
             const res = createParticles(video, shaderType);
             res.position.set(...position);
             res.rotation.set(...rotation);
