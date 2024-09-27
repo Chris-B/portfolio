@@ -353,7 +353,7 @@ export const VideoPointsShader = ({ audio, video, shaderType='VideoShader1', con
     useEffect(()=>{
         if(isPlaying) {
             void video?.play();
-            audio.play()
+            void audio.listener.context.resume().then(() => audio.play())
         } else {
             video?.pause()
             audio.pause()
