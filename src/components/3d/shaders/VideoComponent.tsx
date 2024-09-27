@@ -8,16 +8,41 @@ import { useFrame, useLoader, useThree } from "@react-three/fiber";
 
 import { useVideoStore } from "~/providers/video-store-provider"
 
-import VideoShader0 from "~/components/shaders/VideoShader0";
-import VideoShader1 from "~/components/shaders/VideoShader1";
+import VideoShader0 from "~/components/3d/shaders/VideoShader0";
+import VideoShader1 from "~/components/3d/shaders/VideoShader1";
 
-type AudioProps = {
-    audioSrc: string,
-    videoSrc: string,
+function loadVideo(videoSrc: string) {
+    const video = document.createElement("video");
+    video.autoplay = false;
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "auto";
+    video.src = videoSrc;
+    video.load();
+    return video
+}
+
+function loadAudio(audioBuffer: AudioBuffer) {
+
+    if(audioBuffer){
+        const audioListener = new THREE.AudioListener();
+        const audioTemp = new THREE.Audio(audioListener);
+        audioTemp.setBuffer(audioBuffer);
+        audioTemp.setLoop(true);
+        audioTemp.setVolume(0.5);
+        return audioTemp
+    }
+
+    return null
+
+}
+
+
+type VideoProps = {
     type?: string,
 }
 
-export const AudioComponents = ({audioSrc,videoSrc, type='MusicShader' }: AudioProps) => {
+export const VideoComponent = ({type='MusicShader' }: VideoProps) => {
     const configuration = `
           r = bass + 0.5;
           g = bass;
@@ -29,43 +54,51 @@ export const AudioComponents = ({audioSrc,videoSrc, type='MusicShader' }: AudioP
           density = 1;
       `;
 
-    const [audio, setAudio] = useState<THREE.Audio>();
+    const { videoLoaded, audioLoaded, setLoaded, setAudioLoaded, setIsPlaying, videoElement, setVideoElement, audio, setAudio, videoSrc } = useVideoStore((state) => state)
 
-    const audioBuffer = useLoader(THREE.AudioLoader, audioSrc)
+    useEffect(() => {
+        setLoaded(false)
+        setAudioLoaded(false)
+        setIsPlaying(false)
+        console.log("Reset Video and Audio")
+    }, [videoSrc]);
 
-    const { isPlaying } = useVideoStore((state) => state)
+    const audioBuffer = useLoader(THREE.AudioLoader, videoSrc)
 
-    useEffect(()=>{
-        let audioTemp: THREE.Audio;
-        if(audioBuffer){
-            const audioListener = new THREE.AudioListener();
-            audioTemp = new THREE.Audio(audioListener);
-            audioTemp.setBuffer(audioBuffer);
-            audioTemp.setLoop(true);
-            audioTemp.setVolume(0.5);
-            setAudio(audioTemp);
+    useEffect(() => {
+        if(!audioLoaded) {
+            const tempAudio = loadAudio(audioBuffer)
+            if (tempAudio) {
+                setAudio(tempAudio)
+            }
+            console.log("Loading Audio")
         }
-        return ()=> {
-            audioTemp.stop();
-            audioTemp.buffer = null;
-            setAudio(audioTemp);
+        if(!videoLoaded) {
+            setVideoElement(loadVideo(videoSrc));
+            console.log("Loading Video")
         }
-    },[audioBuffer]);
+    }, [videoSrc]);
 
-    useEffect(()=>{
-        if(isPlaying && audio){
-            audio.setVolume(0.5);
-            audio.play()
-        } else if (audio) {
-            audio.stop()
+    useFrame(() => {
+        if (!audioLoaded && audio) {
+            console.log("Audio Ready")
+            setAudioLoaded(true)
         }
-    }, [isPlaying]);
+    });
+
+    useFrame(() => {
+        if (videoElement?.readyState == 4 && !videoLoaded) {
+            console.log("Video Ready")
+            console.log(videoElement)
+            setLoaded(true)
+        }
+    });
 
 
     if(type === 'MusicShader' && audio){
         return (<MusicShader audio={audio} position={[0,0,-200]} scale={[20,20,20]} />);
     }else if(type === 'VideoPointsShader' && audio){
-        return (<VideoPointsShader audio={audio} videoSrc={videoSrc} configuration={configuration} />);
+        return (<VideoPointsShader audio={audio} video={videoElement} configuration={configuration} />);
     }else{
         return null;
     }
@@ -260,7 +293,7 @@ export const MusicShader = ({ audio,
 
 type VideoShaderProps = {
     audio: THREE.Audio,
-    videoSrc: string,
+    video: HTMLVideoElement | null,
     shaderType?: string,
     configuration: string,
     position?: [number,number,number],
@@ -283,8 +316,7 @@ type VideoShaderProps = {
                                     distance = 2;
                                 `;
  */
-export const VideoPointsShader = ({ audio, videoSrc, shaderType='VideoShader1', configuration, position=[0,0,0], rotation=[Math.PI, Math.PI, 0], scale=[1,1,1], colorInput = new THREE.Vector3(0,0,0) }: VideoShaderProps) => {
-    videoSrc = videoSrc || '';
+export const VideoPointsShader = ({ audio, video, shaderType='VideoShader1', configuration, position=[0,0,0], rotation=[Math.PI, Math.PI, 0], scale=[1,1,1], colorInput = new THREE.Vector3(0,0,0) }: VideoShaderProps) => {
     configuration = configuration || `
                                                 r = bass + 0.5;
                                                 g = treble;
@@ -304,32 +336,29 @@ export const VideoPointsShader = ({ audio, videoSrc, shaderType='VideoShader1', 
         treble: [5200, 14000],
     };
 
+    const { isPlaying, audioLoaded } = useVideoStore((state) => state)
+
     const [analyser, setAnalyser] = useState<THREE.AudioAnalyser>();
+
     useEffect(()=>{
         if(audio){
             setAnalyser(new THREE.AudioAnalyser(audio, fftSize));
         }
-    },[audio]);
+    },[audioLoaded]);
 
     const {scene} = useThree();
 
-    const [video, setVideo] = useState<HTMLVideoElement | null>(null);
     const [particles, setParticles] = useState<THREE.Points | null>(null);
 
-    const { isPlaying } = useVideoStore((state) => state)
-
     useEffect(()=>{
-        const getVideo = () =>{
-            initVideo(videoSrc).then((result) => setVideo(result)).catch(() => console.log('videoSrcError'));
-        };
         if(isPlaying) {
-            getVideo();
+            void video?.play();
+            audio.play()
+        } else {
+            video?.pause()
+            audio.pause()
         }
-
-        return ()=> {
-            setVideo(null);
-        }
-    }, [isPlaying, videoSrc]);
+    }, [isPlaying]);
 
     useEffect(()=>{
         return () => {
@@ -404,20 +433,6 @@ function createParticles(video: HTMLVideoElement, shaderType: string){
 
     return new THREE.Points(geometry, material);
 }
-
-async function initVideo(url: string): Promise<HTMLVideoElement> {
-    // Get video from url
-    return new Promise(resolve => {
-        const video = document.createElement("video");
-        video.autoplay = true;
-        video.muted = true;
-        video.playsInline = true;
-        video.src = url;
-        video.load();
-        void video.play()
-        resolve(video);
-    });
-  }
 
 function getImageData(video: HTMLVideoElement) {
     const canvas = document.createElement('CANVAS') as HTMLCanvasElement;

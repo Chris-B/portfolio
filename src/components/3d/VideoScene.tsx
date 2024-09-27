@@ -11,9 +11,9 @@ import {
   import { Canvas, useFrame, useThree } from "@react-three/fiber";
 
   import { OrbitControls } from "@react-three/drei";
-  import { AudioComponents } from "~/components/shaders/media-shaders";
+  import { VideoComponent } from "~/components/3d/shaders/VideoComponent";
 
-  export function Scene({ link }: { link: string }) {
+  export function Scene() {
 
       const { camera } = useThree();
       useEffect(()=>{
@@ -34,29 +34,21 @@ import {
 
       return(
           <>
-          <ambientLight args={[0x443333, 0.5]} />
-          <Suspense>
-              {/* <Model /> */}
-              <AudioComponents videoSrc={link} audioSrc={link} type='VideoPointsShader' />
-          </Suspense>
-          {/* <Picture /> */}
-          <OrbitControls ref={orbitRef} enabled={orbitEnabled} enablePan={false} autoRotateSpeed={1.6} />
+            <ambientLight args={[0x443333, 0.5]} />
+            <Suspense>
+              <VideoComponent type='VideoPointsShader' />
+            </Suspense>
+            {/* <Picture /> */}
+            <OrbitControls ref={orbitRef} enabled={orbitEnabled} enablePan={false} autoRotateSpeed={1.6} />
           </>
       );
   }
 
-  export default function AudioVisualizer() {
-      const [link, setLink] = useState('');
-      useEffect(()=>{
-         setLink('/video/Zeds Dead X Mkla - Alive.mp4');
-      }, [])
-
+  export default function VideoScene() {
       return (
           <>
               <Canvas className="canvas" style={{backgroundColor:'#000000', position:'absolute', width:'100%', height:'100vh'}} camera={{far:20000}}>
-                  <Suspense>
-                      <Scene link={link} />
-                  </Suspense>
+                <Scene/>
               </Canvas>
           </>
       )
