@@ -16,18 +16,17 @@ export default function VideoControls() {
     if (audio && videoElement) {
       if (!isPlaying) {
         setIsPlaying(true)
+        const tempAudio = document.createElement("audio");
+        tempAudio.autoplay = false;
+        tempAudio.muted = true;
+        tempAudio.preload = "auto";
+        tempAudio.src = videoSrc;
+        tempAudio.currentTime = videoElement.currentTime;
+        tempAudio.load();
+        void tempAudio.play()
+        setIphoneAudio(tempAudio)
         audio.setVolume(0.5)
         audio.play()
-        if(isIPhone) {
-            const tempAudio = document.createElement("audio");
-            tempAudio.autoplay = false;
-            tempAudio.preload = "auto";
-            tempAudio.src = videoSrc;
-            tempAudio.currentTime = videoElement.currentTime;
-            tempAudio.load();
-            void tempAudio.play()
-            setIphoneAudio(tempAudio)
-        }
         void videoElement.play()
       } else {
         setIsPlaying(false)
