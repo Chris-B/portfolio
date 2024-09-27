@@ -8,14 +8,7 @@ import { useEffect, useState } from "react";
 export default function VideoControls() {
   const { videoLoaded, isPlaying, setIsPlaying, audio, videoElement, videoSrc } = useVideoStore((state) => state)
 
-  //const [isIPhone, setIsIPhone] = useState<boolean | null>(null);
-
   const isIPhone = true;
-
-  // if (isIPhone == null) {
-  //   const userAgent = window.navigator.userAgent;
-  //   setIsIPhone(userAgent.includes('iPhone'));
-  // }
 
   const [iphoneAudio, setIphoneAudio] = useState<HTMLAudioElement | null>(null)
 
@@ -26,24 +19,20 @@ export default function VideoControls() {
         audio.setVolume(0.5)
         audio.play()
         if(isIPhone) {
-          if (!iphoneAudio) {
             const tempAudio = document.createElement("audio");
             tempAudio.autoplay = false;
-            tempAudio.muted = true;
             tempAudio.preload = "auto";
             tempAudio.src = videoSrc;
+            tempAudio.currentTime = videoElement.currentTime;
             tempAudio.load();
+            void tempAudio.play()
             setIphoneAudio(tempAudio)
-          }
-          iphoneAudio!.muted = false
-          void iphoneAudio!.play()
         }
         void videoElement.play()
       } else {
         setIsPlaying(false)
         audio.pause()
         if(isIPhone && iphoneAudio) {
-          iphoneAudio.muted = true
           iphoneAudio.pause()
         }
         videoElement.pause()
