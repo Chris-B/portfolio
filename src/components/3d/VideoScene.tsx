@@ -13,7 +13,11 @@ import {
   import { OrbitControls } from "@react-three/drei";
   import { VideoComponent } from "~/components/3d/shaders/VideoComponent";
 
+import { useVideoStore } from "~/providers/video-store-provider"
+
   export function Scene() {
+
+    const { videoSrc } = useVideoStore((state) => state)
 
       const { camera } = useThree();
       useEffect(()=>{
@@ -35,9 +39,11 @@ import {
       return(
           <>
             <ambientLight args={[0x443333, 0.5]} />
-            <Suspense>
-              <VideoComponent type='VideoPointsShader' />
-            </Suspense>
+            { videoSrc ? (
+              <Suspense>
+                <VideoComponent type='VideoPointsShader' />
+              </Suspense>
+            ) : null }
             {/* <Picture /> */}
             <OrbitControls ref={orbitRef} enabled={orbitEnabled} enablePan={false} autoRotateSpeed={1.6} />
           </>

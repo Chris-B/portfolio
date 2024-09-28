@@ -10,7 +10,7 @@ export type VideoState = {
   isPlaying: boolean,
   videoElement: HTMLVideoElement | null,
   audio: THREE.Audio | null,
-  videoSrc: string,
+  videoSrc: string | null,
   audioBuffer: AudioBuffer | null,
 }
 
@@ -32,7 +32,7 @@ export const defaultInitState: VideoState = {
   videoLoaded: false,
   videoElement: null,
   audio: null,
-  videoSrc: '/music-videos/Zeds Dead - Alive.mp4',
+  videoSrc: null, //'/music-videos/Zeds Dead - Alive.mp4'
   audioBuffer: null
 }
 

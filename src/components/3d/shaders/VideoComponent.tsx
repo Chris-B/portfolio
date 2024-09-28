@@ -57,6 +57,7 @@ export const VideoComponent = ({type='MusicShader' }: VideoProps) => {
 
     const { videoLoaded, audioLoaded, setLoaded, setAudioLoaded, setIsPlaying, videoElement, setVideoElement, audio, setAudio, videoSrc } = useVideoStore((state) => state)
 
+
     useEffect(() => {
         setLoaded(false)
         setAudioLoaded(false)
@@ -64,7 +65,7 @@ export const VideoComponent = ({type='MusicShader' }: VideoProps) => {
         console.log("Reset Video and Audio")
     }, [videoSrc]);
 
-    const audioBuffer = useLoader(THREE.AudioLoader, videoSrc)
+    const audioBuffer = useLoader(THREE.AudioLoader, videoSrc!)
 
     useEffect(() => {
         if(!audioLoaded) {
@@ -75,7 +76,7 @@ export const VideoComponent = ({type='MusicShader' }: VideoProps) => {
             console.log("Loading Audio")
         }
         if(!videoLoaded) {
-            setVideoElement(loadVideo(videoSrc));
+            setVideoElement(loadVideo(videoSrc!));
             console.log("Loading Video")
         }
     }, [videoSrc]);
@@ -317,7 +318,7 @@ type VideoShaderProps = {
                                     distance = 2;
                                 `;
  */
-export const VideoPointsShader = ({ audio, video, shaderType='VideoShader1', configuration, position=[0,0,0], rotation=[Math.PI, Math.PI, 0], scale=[1,1,1], colorInput = new THREE.Vector3(0,0,0) }: VideoShaderProps) => {
+export const VideoPointsShader = ({ audio, video, shaderType='VideoShader0', configuration, position=[0,0,0], rotation=[Math.PI, Math.PI, 0], scale=[1,1,1], colorInput = new THREE.Vector3(0,0,0) }: VideoShaderProps) => {
     configuration = configuration || `
                                                 r = bass + 0.5;
                                                 g = treble;
