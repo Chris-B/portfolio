@@ -9,7 +9,7 @@ import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 
 type VideoResponse = {
-  videoPath: string;
+  videoData: string; // Base64-encoded video data
 };
 
 export default function VideoControls() {
@@ -48,7 +48,7 @@ export default function VideoControls() {
   };
 
   // Updated to match the new youtubeRouter API
-  const { data: mp4Video, refetch, isLoading } = api.youtube.getVideoUrl.useQuery(
+  const { data: videoResponse, refetch, isLoading } = api.youtube.getVideoStream.useQuery(
     { url: inputLink },
     {
       enabled: false, // Disable automatic fetching
@@ -57,27 +57,30 @@ export default function VideoControls() {
   );
 
   useEffect(() => {
-    if (inputSubmitted) {
-      refetch().then(() => {
-        console.log('here 1')
-        if (mp4Video?.videoPath) {
-          console.log('here 2')
-          setVideoSrc('/video.mp4'); // Set the path returned by the server
-          setInputSubmitted(false); // Reset input submission state
-        }
-      }).catch((error) => console.error(error));
+    if (inputSubmitted && videoResponse?.videoData) {
+      const byteCharacters = atob(videoResponse.videoData);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'video/mp4' });
+      const videoUrl = URL.createObjectURL(blob);
+
+      setVideoSrc(videoUrl); // Set the Blob URL as the video source
     }
-  }, [inputSubmitted, mp4Video, refetch]);
+  }, [inputSubmitted, videoResponse]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setInputSubmitted(true);
+    void refetch(); // Fetch the video stream
   };
 
   return (
     <div className="fixed left-1/2 top-[87%] z-50 -translate-x-1/2 -translate-y-1/2 scale-75 transform rounded-lg border border-purple-500/30 bg-black/30 p-4 text-white backdrop-blur-md md:scale-100">
       <div className="flex h-16 flex-col items-center justify-center">
-        {!videoSrc ? (
+        {!videoSrc && !inputSubmitted ? (
           <form onSubmit={handleSubmit} className="flex gap-2">
             <Input
               type="url"
