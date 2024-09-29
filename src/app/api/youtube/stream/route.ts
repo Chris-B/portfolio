@@ -12,6 +12,7 @@ export async function GET(req: Request) {
 
   try {
     const stream = ytdl(url, { filter: 'audioandvideo' });
+    console.log('Stream created successfully:', stream); // Debug log
 
     // Create a new ReadableStream from the ytdl stream
     const readableStream = new ReadableStream({
@@ -37,6 +38,7 @@ export async function GET(req: Request) {
     });
   } catch (error) {
     // Narrowing the error type safely
+    console.error('Error fetching video:', error); // Log the error
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
