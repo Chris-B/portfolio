@@ -11,7 +11,14 @@ export async function GET(req: Request) {
   }
 
   try {
-    const stream = ytdl(url, { filter: 'audioandvideo' });
+    const stream = ytdl(url, {
+      filter: 'audioandvideo',
+      requestOptions: {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+        }
+      }
+    });
     console.log('Stream created successfully:', stream); // Debug log
 
     // Create a new ReadableStream from the ytdl stream
