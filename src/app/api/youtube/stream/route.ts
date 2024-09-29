@@ -14,7 +14,7 @@ export async function GET(req: Request) {
   try {
 
     const NORMAL_OAUTH2 = new YtdlCore.OAuth2({
-      accessToken: '4eyHJFDykNTWiHXBmaZGhfvHhQGiYyJuZm9TvC8hJpGv5bpxm7A75U8IJz5zir4RiWxXDCRglKoxNwImpBltIbYUu3IXpgtCmizQGBegUaGvAzlG5X3lRoxXLs4EaCgYKAWISARESFQHGX2MidMzLCfXPHv4iKNgTBwl0jQ0187',
+      accessToken: 'ya29.a0AcM612y-agn17IELODzXsYfgsoTFCkccZQHC4pfKEwWRlE0_0Y6f4tn-4eyHJFDykNTWiHXBmaZGhfvHhQGiYyJuZm9TvC8hJpGv5bpxm7A75U8IJz5zir4RiWxXDCRglKoxNwImpBltIbYUu3IXpgtCmizQGBegUaGvAzlG5X3lRoxXLs4EaCgYKAWISARESFQHGX2MidMzLCfXPHv4iKNgTBwl0jQ0187',
       refreshToken: '1//06tdtu6piLYZJCgYIARAAGAYSNwF-L9IrdJ-EMKtQVzr4k8_zXbDCrtS27g586xeWnqC74FjUJzH31GYfRgP3Ab0xZ64Pznby18E',
       expiryDate: '2024-09-30T02:40:35.470Z',
     });
