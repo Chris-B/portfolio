@@ -24,6 +24,7 @@ export async function GET(req: Request) {
           controller.close(); // Close the stream when done
         });
         stream.on('error', (err) => {
+          console.error('Stream error:', err);
           controller.error(err); // Handle any errors
         });
       },
