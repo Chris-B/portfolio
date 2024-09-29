@@ -22,6 +22,7 @@ export const youtubeRouter = createTRPCRouter({
           });
 
           stream.on("end", () => {
+            console.log("resolved video chunks")
             resolve(videoChunks);
           });
 

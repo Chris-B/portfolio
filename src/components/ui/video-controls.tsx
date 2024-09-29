@@ -67,6 +67,8 @@ export default function VideoControls() {
       const blob = new Blob([byteArray], { type: 'video/mp4' });
       const videoUrl = URL.createObjectURL(blob);
 
+      console.log(videoUrl)
+
       setVideoSrc(videoUrl); // Set the Blob URL as the video source
     }
   }, [inputSubmitted, videoResponse]);
