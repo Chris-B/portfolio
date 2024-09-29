@@ -9,7 +9,7 @@ import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 
 type VideoResponse = {
-  videoData: string; // Base64-encoded video data
+  videoUrl: string; // Base64-encoded video data
 };
 
 export default function VideoControls() {
@@ -52,31 +52,20 @@ export default function VideoControls() {
     { url: inputLink },
     {
       enabled: false, // Disable automatic fetching
-      select: (data) => data as VideoResponse, // Cast the result to the VideoResponse type
     }
   );
 
   useEffect(() => {
-    if (inputSubmitted && videoResponse?.videoData) {
-      const byteCharacters = atob(videoResponse.videoData);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: 'video/mp4' });
-      const videoUrl = URL.createObjectURL(blob);
-
-      console.log(videoUrl)
-
-      setVideoSrc(videoUrl); // Set the Blob URL as the video source
+    if (inputSubmitted && videoResponse) {
+      // Assuming the server sends a stream, set the input URL directly as the video source
+      setVideoSrc(videoResponse.videoUrl);
     }
   }, [inputSubmitted, videoResponse]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setInputSubmitted(true);
-    void refetch(); // Fetch the video stream
+    void refetch(); // Trigger the API call
   };
 
   return (
