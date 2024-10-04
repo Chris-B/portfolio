@@ -8,10 +8,6 @@ import { Input } from "~/components/ui/input";
 
 import { api } from "~/trpc/react";
 
-type VideoResponse = {
-  videoUrl: string; // Base64-encoded video data
-};
-
 export default function VideoControls() {
   const { videoLoaded, isPlaying, setIsPlaying, audio, videoElement, videoSrc, setVideoSrc } = useVideoStore((state) => state);
 
@@ -56,10 +52,19 @@ export default function VideoControls() {
   );
 
   useEffect(() => {
-    if (inputSubmitted && videoResponse) {
-      // Assuming the server sends a stream, set the input URL directly as the video source
-      setVideoSrc(videoResponse.videoUrl);
-    }
+    const fetchVideo = async () => {
+      if (inputSubmitted && videoResponse) {
+        try {
+          const response = await fetch(videoResponse.videoUrl);
+          const videoBlob = await response.blob();
+          const videoUrl = URL.createObjectURL(videoBlob);
+          setVideoSrc(videoUrl); // Assuming you want to set this as the video source
+        } catch (error) {
+          console.error("Error fetching video:", error);
+        }
+      }
+    };
+    void fetchVideo();
   }, [inputSubmitted, videoResponse]);
 
   const handleSubmit = (e: React.FormEvent) => {
