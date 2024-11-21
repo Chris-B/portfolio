@@ -1,29 +1,34 @@
-# Create T3 App
+## My personal website showcasing my software engineering skills.
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Live Demo
 
-## What's next? How do I make an app with this?
+[Visit the live site](https://chrisbarclay.dev)
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Description
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+This project was an exploration into creating immersive web experiences using **React Three Fiber**. The goal was to showcase my portfolio in a unique, cyberpunk-themed 3D environment.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+I faced challenges in creating intuitive user interactions within a 3D space. To overcome this, I designed a hybrid 2D/3D UI for better usability. The projects and experience pages utilize a standard 2D web UI.
 
-## Learn More
+## Features
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- **Cyberpunk-themed 3D environment**: Immerse yourself in a unique portfolio experience.
+- **Hybrid 2D/3D User Interface**: Combines the best of both worlds for intuitive navigation.
+- **Showcases Projects and Experience**: Detailed pages highlighting my work and skills.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Technologies Used
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [ShadCN UI](https://ui.shadcn.com/)
+- [Three.js](https://threejs.org/)
+- [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)
+- [tRPC](https://trpc.io/)
+- [Zustand](https://zustand-demo.pmnd.rs/)\
 
-## How do I deploy this?
+## Contact
+### Feel free to reach out if you have any questions or suggestions.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- [Website](https://chrisbarclay.dev)
+- [GitHub](https://github.com/Chris-B)
