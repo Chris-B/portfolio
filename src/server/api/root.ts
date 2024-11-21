@@ -1,4 +1,3 @@
-import { postRouter } from "~/server/api/routers/post";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 import { spotifyRouter } from "~/server/api/routers/spotify";
 import { youtubeRouter } from "~/server/api/routers/youtube";
@@ -9,7 +8,6 @@ import { youtubeRouter } from "~/server/api/routers/youtube";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  post: postRouter,
   spotify: spotifyRouter,
   youtube: youtubeRouter,
 });

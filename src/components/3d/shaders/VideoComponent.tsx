@@ -1,6 +1,6 @@
 'use client'
 
-/* Author this code: espisepi */
+/* Author of shaders: espisepi */
 /* Code based in: https://tympanus.net/codrops/2019/09/06/how-to-create-a-webcam-audio-visualizer-with-three-js/ */
 import React, { useEffect, useMemo, useState } from "react";
 import * as THREE from "three";

@@ -9,5 +9,7 @@ export const youtubeRouter = createTRPCRouter({
       const { url } = input;
       // Return the API route for streaming
       return { videoUrl: `https://chrisyoutuberserverdomaincustom.cc:3000/youtube/stream?url=${encodeURIComponent(url)}` };
+
+      //return { videoUrl: `http://localhost:3001/youtube/stream?url=${encodeURIComponent(url)}` };
     }),
 });
