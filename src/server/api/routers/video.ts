@@ -7,8 +7,8 @@ export const videoRouter = createTRPCRouter({
     .query(({ input }) => {
       const { url } = input;
       // Return the API route for streaming
-      //return { videoUrl: `https://chrisyoutuberserverdomaincustom.cc:3000/video/stream?url=${encodeURIComponent(url)}` };
+      return { videoUrl: `https://chrisyoutuberserverdomaincustom.cc:3000/video/stream?url=${encodeURIComponent(url)}` };
 
-      return { videoUrl: `http://localhost:3001/video/stream?url=${encodeURIComponent(url)}` };
+      //return { videoUrl: `http://localhost:3001/video/stream?url=${encodeURIComponent(url)}` };
     }),
 });
