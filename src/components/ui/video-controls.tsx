@@ -44,7 +44,7 @@ export default function VideoControls() {
   };
 
   // Updated to match the new youtubeRouter API
-  const { data: videoResponse, refetch, isLoading } = api.youtube.getVideoStream.useQuery(
+  const { data: videoResponse, refetch, isLoading } = api.video.getVideoStream.useQuery(
     { url: inputLink },
     {
       enabled: false, // Disable automatic fetching
@@ -80,7 +80,7 @@ export default function VideoControls() {
           <form onSubmit={handleSubmit} className="flex gap-2">
             <Input
               type="url"
-              placeholder="Enter video URL"
+              placeholder="Enter Direct MP4 Link"
               value={inputLink}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputLink(e.target.value)}
               className="border-cyan-600 bg-transparent text-white"
